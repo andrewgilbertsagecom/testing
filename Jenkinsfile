@@ -4,7 +4,7 @@ pipeline {
         stage('Do stuff') {
             steps {
                 echo "Hello bob"
-                error ("ouch")
+                //error ("ouch")
             }
         }
     }
