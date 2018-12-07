@@ -4,6 +4,7 @@ pipeline {
         stage('Do stuff') {
             steps {
                 echo "Hello bob"
+                error ("ouch")
             }
         }
     }
@@ -20,6 +21,7 @@ pipeline {
 void setBuildStatus(String message, String state) {
   step([
       $class: "GitHubCommitStatusSetter",
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status-asg"],
       errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
       statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
   ]);
