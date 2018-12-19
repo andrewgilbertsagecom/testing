@@ -3,7 +3,7 @@ pipeline {
     agent any
     environment {
         PMD_RULESET_FILE = "./pmd-apex-ruleset.xml"
-        PMD_RESULTS_FILE = "./pmd.html"
+        PMD_RESULTS_FILE = "./pmd-report/pmd.html"
     }
     stages {
         stage('Get tools') {
@@ -21,12 +21,14 @@ pipeline {
             steps {
                 dir("/api-poc/api-people") {
                     sh "${pmdpath} -dir . -format xslt -property xsltFilename=pmd-report.xsl -rulesets ${env.PMD_RULESET_FILE} -reportfile ${env.PMD_RESULTS_FILE} -failOnViolation false"
-                    archiveArtifacts (
-                        artifacts: "pmd.html"
-                    )
-                    archiveArtifacts (
-                        artifacts: "pmd-report.css"
-                    )
+                    publishHTML target: [
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll: true,
+                        reportDir: 'pmd-report',
+                        reportFiles: 'pmd.html',
+                        reportName: 'Code Analysis'
+                      ]
                 }
             }
         }
