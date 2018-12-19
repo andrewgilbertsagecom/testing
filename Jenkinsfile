@@ -5,7 +5,9 @@ pipeline {
             steps {
                 echo "Hello hello"
                 //error ("ouch")
-                currentBuild.result = hudson.model.Result.UNSTABLE.toString()
+                script {
+                    currentBuild.result = hudson.model.Result.UNSTABLE.toString()
+                }
             }
         }
     }
