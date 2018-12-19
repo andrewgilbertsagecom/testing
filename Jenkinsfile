@@ -20,7 +20,7 @@ pipeline {
         stage('Run code analysis') {
             steps {
                 dir("/api-poc/api-people") {
-                    sh "${pmdpath} -dir . -format html -rulesets ${env.PMD_RULESET_FILE} -reportfile ${env.PMD_RESULTS_FILE} -failOnViolation false"
+                    sh "${pmdpath} -dir . -format xslt -property xsltFilename=pmd-report-per-class.xslt -rulesets ${env.PMD_RULESET_FILE} -reportfile ${env.PMD_RESULTS_FILE} -failOnViolation false"
                     archiveArtifacts (
                         artifacts: "pmd.html"
                     )
