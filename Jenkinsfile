@@ -5,12 +5,16 @@ pipeline {
             steps {
                 echo "Hello hello"
                 //error ("ouch")
+                currentBuild.result = hudson.model.Result.UNSTABLE.toString()
             }
         }
     }
   post {
     success {
         setBuildStatus("Build asg succeeded", "SUCCESS");
+    }
+    unstable {
+        setBuildStatus("Build asg unstable", "UNSTABLE");
     }
     failure {
         setBuildStatus("Build asg failed", "FAILURE");
