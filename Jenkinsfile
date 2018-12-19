@@ -21,6 +21,9 @@ pipeline {
             steps {
                 dir("/api-poc/api-people") {
                     sh "${pmdpath} -dir . -format html -rulesets ${env.PMD_RULESET_FILE} -reportfile ${env.PMD_RESULTS_FILE} -failOnViolation false"
+                    archiveArtifacts (
+                        artifacts: env.PMD_RESULTS_FILE
+                    )
                 }
             }
         }
