@@ -16,7 +16,7 @@ pipeline {
         setBuildStatus("Build asg succeeded", "SUCCESS");
     }
     unstable {
-        setBuildStatus("Build asg unstable", "PENDING");
+        setBuildStatus("Build asg unstable", "pending");
     }
     failure {
         setBuildStatus("Build asg failed", "FAILURE");
